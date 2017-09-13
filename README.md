@@ -49,6 +49,8 @@ If
 			dE/dW  =  0, then minima (desired point). 
 
 
+
+<img src="https://github.com/sumeesha/Sentence-Correction--Deep-Learning/blob/master/Screenshot%20from%202017-09-14%2003-34-00.png" />
 </li>
  </ul>
  </p>
