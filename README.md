@@ -1,4 +1,4 @@
-# Sentence-Correction--Deep-Learning
+# Binary-Addition--Deep-Learning
 
 The topics which i have mentioned are a part of my unfinished study. Please consider reading these topics one by one to get a quick idea of the basics.
 
