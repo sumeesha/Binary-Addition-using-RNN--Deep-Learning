@@ -95,3 +95,58 @@ for j in range(10000):
         # did we miss?... if so, by how much?
         # error = binary difference of desired output and generated output
         layer_2_error = y - layer_2
+        layer_2_deltas.append((layer_2_error)*sigmoid_output_to_derivative(layer_2))
+        overallError += np.abs(layer_2_error[0])
+    
+        # decode estimate so we can print it out
+        d[binary_dim - position - 1] = np.round(layer_2[0][0])
+        
+        # store hidden layer so we can use it in the next timestep
+        layer_1_values.append(copy.deepcopy(layer_1))
+    
+    future_layer_1_delta = np.zeros(hidden_dim)
+    
+    for position in range(binary_dim):
+        
+        X = np.array([[a[position],b[position]]])
+        layer_1 = layer_1_values[-position-1]
+        prev_layer_1 = layer_1_values[-position-2]
+        
+        # error at output layer
+        layer_2_delta = layer_2_deltas[-position-1]
+        # error at hidden layer
+        layer_1_delta = (future_layer_1_delta.dot(synapse_h.T) + layer_2_delta.dot(synapse_1.T)) * sigmoid_output_to_derivative(layer_1)
+
+        # let's update all our weights so we can try again
+        synapse_1_update += np.atleast_2d(layer_1).T.dot(layer_2_delta)
+        synapse_h_update += np.atleast_2d(prev_layer_1).T.dot(layer_1_delta)
+        synapse_0_update += X.T.dot(layer_1_delta)
+        
+        future_layer_1_delta = layer_1_delta
+    
+
+    synapse_0 += synapse_0_update * alpha
+    synapse_1 += synapse_1_update * alpha
+    synapse_h += synapse_h_update * alpha    
+
+    synapse_0_update *= 0
+    synapse_1_update *= 0
+    synapse_h_update *= 0
+    
+    # print out progress
+    if(j % 1000 == 0):
+        print ("Error:" ),
+        print(str(overallError))
+        print ("Pred:"),
+        print(str(d))
+        print("True:")
+        print( str(c))
+        out = 0
+        for index,x in enumerate(reversed(d)):
+            out += x*pow(2,index)
+        print(str(a_int)),
+        print(" + " ),
+        print(str(b_int)),
+        print(" = " ),
+        print(str(out))
+        print ("------------")
