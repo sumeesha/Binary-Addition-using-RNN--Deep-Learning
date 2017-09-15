@@ -37,7 +37,7 @@ output_dim = 1 # we get only one bit (0 or 1)
 # SYsnapse represents the network lines (weights)
 synapse_0 = 2*np.random.random((input_dim,hidden_dim)) - 1  # 2 * 16 nets (2 * [0,1] - 1 == (-1,1)))
 synapse_1 = 2*np.random.random((hidden_dim,output_dim)) - 1 # 16 * 1
-synapse_h = 2*np.random.random((hidden_dim,hidden_dim)) - 1	# 16 * 16
+synapse_h = 2*np.random.random((hidden_dim,hidden_dim)) - 1 # 16 * 16
 
 # initializing to zeroes
 # fill weight update matrix with zeroes consisting of same dimensions as synapse_0,1,h
@@ -71,8 +71,8 @@ for j in range(100000):
     overallError = 0
     
     # init
-    layer_2_deltas = list()
-    layer_1_values = list()
+    layer_2_deltas = list() #hidden layer
+    layer_1_values = list() #input layer
 
     # since there is no previous hidden layer, we are adding zeros to respective layers 
     layer_1_values.append(np.zeros(hidden_dim))
